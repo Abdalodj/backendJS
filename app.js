@@ -1,8 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const cred = require("./sec");
 
-mongoose.connect("mongodb+srv://yakhad:wwwraw10@cluster0.ystg4.mongodb.net/test?retryWrites=true&w=majority", {
+
+
+mongoose.connect("mongodb+srv://"+cred.credentiels.uName+":"+cred.credentiels.uPasswd+"@cluster0.ystg4.mongodb.net/test?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => console.log('Connexion à MongoDB réussie !'))
