@@ -3,12 +3,13 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cred = require("./sec");
 const stuffRoutes = require("./routes/stuff");
+const userRoutes = require("./routes/user");
 
 mongoose.connect("mongodb+srv://"+cred.credentiels.uName+":"+cred.credentiels.uPasswd+"@cluster0.ystg4.mongodb.net/test?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true
-}).then(() => console.log('Connexion à MongoDB réussie !'))
-    .catch(() => console.log("Connexion à MongoDB échoué !"));
+}).then(() => console.log('MongoDB connection successful !'))
+    .catch(() => console.log("MongoDB connection failed !"));
 
 const app = express();
 
@@ -22,5 +23,6 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 
 app.use('/api/stuff', stuffRoutes);
+app.use('/api/auth', userRoutes)
 
 module.exports = app;
