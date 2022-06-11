@@ -13,6 +13,10 @@ exports.createThing = (req, res, next) =>  {
 };
 
 exports.modifyThing = (req, res, next) => {
+    const thingObject = req.file ? { 
+        ...JSON.parse(req.body.thing),
+        imageUrl: `${req.protocole}://${req.get('host')}/images/${req.filename}`
+     } : { ...req.body };
     Thing.updateOne({_id: req.params.id}, { ...req.body, _id: req.params.id})
         .then(() => res.status(200).json({message: "Thing updated successfully!"}))
         .catch(error => res.status(400).json({error}));
