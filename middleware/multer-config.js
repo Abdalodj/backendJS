@@ -5,14 +5,16 @@ const mimetypes = {
   'image/jpeg': 'jpg',
   'image/png': 'png'
 }
-const storage = multer.diskStorage(
-  {
-    destination: (req, file, callback) => {
-      callback(null, 'images')
-    },
-    filename: (req, file, callback) => {
-      const name = file.originalname.split(' ').join('_');
 
-    }
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, 'images')
+  },
+  filename: (req, file, callback) => {
+    const name = file.originalname.split(' ').join('_');
+    const extension = mimetypes(file.mimetype);
+    callback(null, name + Date.now() + '.' + extension)
   }
-)
+})
+
+module.exports = multer({ storage }).single('image')
