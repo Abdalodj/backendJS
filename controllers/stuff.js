@@ -1,9 +1,11 @@
 const  Thing = require('../models/Thing');
 
 exports.createThing = (req, res, next) =>  {
-    delete req.body._id;
+    const thingObject = JSON.parse(req.body.thing);
+    delete thingObject._id;
     const thing = new Thing({
-        ...req.body
+        ...req.body,
+        imageUrl: `${req.protocole}://${req.get('host')}/images/${req.filename}`
     });
     thing.save()
         .then(() => res.status(201).json({message: 'Post saved successfully!'}))
